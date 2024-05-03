@@ -84,7 +84,8 @@ def data_creator():
     for file in os.listdir(os.path.join(get_base_dir(), "dataset")):
         name, ext = os.path.splitext(file)
 
-        if ext != ".json" or int(name) not in range(10000, 15000):
+        # if ext != ".json" or int(name) not in range(10000, 15000):
+        if ext != ".json":
             continue
         data = load_json_file(os.path.join(get_base_dir(), "dataset", file))
 
