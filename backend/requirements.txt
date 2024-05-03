@@ -1,0 +1,9 @@
+Flask
+APIFlask
+SQLAlchemy
+Flask-SQLAlchemy
+flask-cors
+elasticsearch
+whoosh-reloaded
+flask-jwt-extended
+Flask-Migrate
