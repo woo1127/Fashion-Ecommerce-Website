@@ -1,9 +1,21 @@
 <script>
     import '$lib/styles/normalize.css'
     import '$lib/styles/index.css'
+    import { afterUpdate } from 'svelte';
     import { page } from '$app/stores'
+    import { getFlash } from 'sveltekit-flash-message'
 
     let active = false
+    const flash = getFlash(page, {clearAfterMs: 3500})
+
+    // fallback when clearAfterMs doesn't work, idk why it doesn't work
+    afterUpdate(() => {
+        if ($flash) {
+            setTimeout(() => {
+                $flash = null
+            }, 3500)
+        }
+    })
 </script>
 
 
@@ -73,6 +85,22 @@
 </nav>
 
 <div class="page-content">
+    {#if $flash}
+        <div 
+            class="popup"
+            class:popup--success={$flash.type === 'success'}
+            class:popup--error={$flash.type === 'error'}
+        >
+            <span class="popup__icon">
+                {#if $flash.type == 'success'}
+                    <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><defs><style> .cls-1 { fill: #699f4c; fill-rule: evenodd; } </style></defs><path class="cls-1" d="M800,510a30,30,0,1,1,30-30A30,30,0,0,1,800,510Zm-16.986-23.235a3.484,3.484,0,0,1,0-4.9l1.766-1.756a3.185,3.185,0,0,1,4.574.051l3.12,3.237a1.592,1.592,0,0,0,2.311,0l15.9-16.39a3.187,3.187,0,0,1,4.6-.027L817,468.714a3.482,3.482,0,0,1,0,4.846l-21.109,21.451a3.185,3.185,0,0,1-4.552.03Z" id="check" transform="translate(-770 -450)"></path></g></svg>
+                {:else}
+                    <svg fill="#ff424f" viewBox="0 0 200 200" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" stroke="#ff424f"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><title></title><path d="M100,15a85,85,0,1,0,85,85A84.93,84.93,0,0,0,100,15Zm0,150a65,65,0,1,1,65-65A64.87,64.87,0,0,1,100,165Z"></path><path d="M128.5,74a9.67,9.67,0,0,0-14,0L100,88.5l-14-14a9.9,9.9,0,0,0-14,14l14,14-14,14a9.9,9.9,0,0,0,14,14l14-14,14,14a9.9,9.9,0,0,0,14-14l-14-14,14-14A10.77,10.77,0,0,0,128.5,74Z"></path></g></svg>
+                {/if}
+            </span>
+            <p class="popup__text">{$flash.message}</p>
+        </div>
+    {/if}
     <slot />
 </div>
 
@@ -83,6 +111,7 @@
 
 <style>
     .page-content {
+        position: relative;
         min-height: 90vh;
         margin-top: 10vh;
     }
@@ -194,5 +223,56 @@
         border: none;
         outline: none;
         background-color: inherit;
+    }
+
+    @keyframes updown {
+        0% {
+            top: -50vh;
+        }
+        35% {
+            top: 20vh;
+        }
+        65% {
+            top: 20vh;
+        }
+        100% {
+            top: -50vh;
+        }
+    }
+    .popup {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.95;
+        z-index: 500;
+        padding: 3.5rem 3rem;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+        display: flex;
+        flex-direction: column;
+        place-items: center;
+        animation: updown 3500ms ease-in-out;
+    }
+    .popup__icon {
+        display: inline-grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        padding-bottom: 3.2rem;
+    }
+    .popup__text {
+        font-size: 1.6rem;
+    }
+    .popup--success {
+        color: #4F8A10;
+        background-color: #DFF2BF;
+        border: 2px solid #d4f39e;
+    }
+    .popup--error {
+        color: #D8000C;
+        background-color: #FFBABA;
+        border: 2px solid #fc9595;
     }
 </style>

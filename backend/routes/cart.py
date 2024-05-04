@@ -61,6 +61,9 @@ def update_cart_item():
 @cart_bp.post("/get_cart_info")
 @jwt_required()
 def get_cart_info():
+    if not current_user.carts:
+        return error_response(404, 'Cart is empty')
+
     items = [item.to_dict() for item in current_user.carts]
 
     for item in items:

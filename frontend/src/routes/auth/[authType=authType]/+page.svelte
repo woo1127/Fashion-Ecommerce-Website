@@ -1,10 +1,13 @@
 <script>
     import { page } from '$app/stores'
     import { enhance } from '$app/forms'
-    let authType = $page.params.authType
 
     /** @type {import('./$types').ActionData} */
     export let form;
+
+    // This variable need to be reactive so that page will be re-rendered 
+    // when the redirect function been called at the +page.server.js
+    $: authType = $page.params.authType
 </script>
 
 <svelte:head>

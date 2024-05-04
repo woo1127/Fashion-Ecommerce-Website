@@ -41,6 +41,9 @@ devDependencies:
   svelte-carousel:
     specifier: ^1.0.25
     version: 1.0.25
+  sveltekit-flash-message:
+    specifier: ^2.4.4
+    version: 2.4.4(@sveltejs/kit@2.0.0)(svelte@4.2.7)
   vite:
     specifier: ^5.0.3
     version: 5.0.3
@@ -1829,6 +1832,16 @@ packages:
       locate-character: 3.0.0
       magic-string: 0.30.10
       periscopic: 3.1.0
+    dev: true
+
+  /sveltekit-flash-message@2.4.4(@sveltejs/kit@2.0.0)(svelte@4.2.7):
+    resolution: {integrity: sha512-CFN03chH/FMEJcBZ/8zKm7RqGee/pwb57Spbbx8QCQPhe7N9ofZHd9iYV2vVy4E9glBo/oQ1IG7VQje6L092wg==}
+    peerDependencies:
+      '@sveltejs/kit': 1.x || 2.x
+      svelte: 3.x || 4.x || >=5.0.0-next.51
+    dependencies:
+      '@sveltejs/kit': 2.0.0(@sveltejs/vite-plugin-svelte@3.0.0)(svelte@4.2.7)(vite@5.0.3)
+      svelte: 4.2.7
     dev: true
 
   /text-table@0.2.0:
