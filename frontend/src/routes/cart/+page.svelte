@@ -52,9 +52,6 @@
 
         carts = carts.filter(cart => cart.id !== cartId)
     }
-
-    // console.log(carts)
-    // console.log(totalPrice)
 </script>
 
 <svelte:head>
@@ -208,6 +205,7 @@
     }
     .product-name > h2 {
         font-size: 1.8rem;
+        padding-right: 1.5rem;
     }
     .product-name > .delete-btn {
         width: 28px;

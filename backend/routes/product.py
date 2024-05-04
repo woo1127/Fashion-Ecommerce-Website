@@ -30,16 +30,19 @@ def search():
     if page < 1:
         return error_response(400, "Invalid page number")
 
-    filters = []
+    term = search_keyword
+    filters = ['name']
     if gender:
-        filters.append(Product.gender == gender)
+        filters.append('gender')
+        term += " AND {}".format(gender)
     if category:
-        filters.append(Product.category == category)
+        filters.append('category')
+        term += " AND {}".format(category)
     if sub_category:
-        filters.append(Product.sub_category == sub_category)
+        filters.append('sub_category')
+        term += " AND {}".format(sub_category)
 
-    query, _ = Product.search("name", search_keyword)
-    query = query.filter(*filters)
+    query, _ = Product.search(filters, term)
     products = db.paginate(query, page=page, per_page=app.config["PRODUCTS_PER_PAGE"], error_out=False)
     product_list = [product.to_dict() for product in products.items]
     total = len(product_list)

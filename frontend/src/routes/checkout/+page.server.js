@@ -11,7 +11,7 @@ export async function load({ locals }) {
     })
     const json = await res.json()
 
-    if (!res.ok) error(400, json.message)
+    if (!res.ok) error(json.code, json.message)
 
     return {carts: json.data, access_token: locals.accessToken}
 }

@@ -90,22 +90,28 @@
 
 <section class="categories">
     <div class="category">
-        <div class="category__img">
-            <img src={banner3} alt="" loading="lazy">
-        </div>
-        <div class="category__title">Women's Fashion</div>
+		<a href="/search?q=shirt&gender=Women&page=1">
+			<div class="category__img">
+				<img src={banner3} alt="" loading="lazy">
+			</div>
+			<div class="category__title">Women's Fashion</div>
+		</a>
     </div>
     <div class="category">
-        <div class="category__img">
-            <img src={banner2} alt="" loading="lazy">
-        </div>
-        <div class="category__title">Men's Assoceries</div>
+		<a href="/search?q=shirt&gender=Men&page=1">
+			<div class="category__img">
+				<img src={banner2} alt="" loading="lazy">
+			</div>
+			<div class="category__title">Men's Assoceries</div>
+		</a>
     </div>
     <div class="category">
-        <div class="category__img">
-            <img src={banner4} alt="" loading="lazy">
-        </div>
-        <div class="category__title">Unisex's Fashion</div>
+		<a href="/search?q=unisex&gender=Unisex&page=1">
+			<div class="category__img">
+				<img src={banner4} alt="" loading="lazy">
+			</div>
+			<div class="category__title">Unisex's Fashion</div>
+		</a>
     </div>
 </section>
 

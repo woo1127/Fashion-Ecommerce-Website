@@ -104,9 +104,9 @@
     <slot />
 </div>
 
-<footer class="footer">
+<!-- <footer class="footer">
     Footer 
-</footer>
+</footer> -->
 
 
 <style>
