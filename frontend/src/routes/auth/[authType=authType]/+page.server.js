@@ -16,7 +16,10 @@ export const actions = {
             password: formData.get('password'),
         }
 
-        if (!data.email || !data.password) 
+        if (
+            typeof data.email !== 'string' || typeof data.password !== 'string' ||
+            !data.email || !data.password
+        ) 
             return fail(400, { message: 'Please fill in all the required fields', error: true })
 
         const res = await fetch('http://127.0.0.1:5000/api/auth/login', {
@@ -50,7 +53,10 @@ export const actions = {
             phone_number: formData.get('phone'),
         }
 
-        if (!data.username || !data.email || !data.password || !data.phone_number) 
+        if (
+            !data.username || !data.email || !data.password || !data.phone_number ||
+            typeof data.username !== 'string' || typeof data.email !== 'string' || typeof data.password !== 'string' || typeof data.phone_number !== 'string'
+        ) 
             return fail(400, { message: 'Please fill in all the required fields', error: true })
 
         const res = await fetch('http://127.0.0.1:5000/api/auth/signup', {
