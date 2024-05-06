@@ -29,7 +29,7 @@
 
         // filter and update the corresponding item in the carts array
         carts = carts.map(cart => {
-            if (cart.id === cartId) return {...json.updated_item}
+            if (cart.id === cartId) return {...json.data}
             else return cart
         })
     }
