@@ -1,16 +1,25 @@
 <script>
     import ButtonGroup from '$lib/components/ButtonGroup.svelte';
-    import { browser } from '$app/environment';
     import { goto } from '$app/navigation';
 
     /** @type {import('./$types').PageData} */
     export let data
+    /** @type {import('./$types').ActionData} */
+    export let form
     
-    let { carts, access_token } = data;
-    let totalPrice = carts.reduce((acc, cart) => acc + cart.total_price, 0);
+    let { carts, user, access_token } = data
+    let totalPrice = carts.reduce((acc, cart) => acc + cart.total_price, 0)
     let payments = {
         "values": [],
         "methods": ["Credit / Debit Card", "Online Banking", "Cash On Delivery", "Paypal", "Apply Pay", "Google Pay"]
+    }
+    let addressFormActive = false
+
+
+    function handleSubmit() {
+        if (form?.error === false) 
+            addressFormActive = false
+        alert('Info updated successfully')
     }
 
     async function placeOrder() {
@@ -37,8 +46,8 @@
         goto('/checkout/success/' + json.data.id)
     }
 
-    console.log(carts)
-    console.log(totalPrice)
+    // console.log(carts)
+    // console.log(totalPrice)
 </script>
 
 <svelte:head>
@@ -58,12 +67,42 @@
                 <div class="card__content">
                     <div class="address-container">
                         <div class="address__info">
-                            <p class="address__name">Jeremy</p>
-                            <p class="address__phone">0123456780</p>
-                            <p class="address__text">88, Persiaran Relau, Jalan Rumbia, 11900 Pulau Pinang</p>
+                            <p class="address__name">{user.username}</p>
+                            <p class="address__phone">{user.phone_number}</p>
+                            {#if user.address}
+                                <p class="address__text">{user.address}</p>
+                            {:else}
+                                <p class="address__text">Address not confirm yet</p>
+                            {/if}
                         </div>
-                        <button id="change-address-btn">Change</button>
+                        <button on:click={() => addressFormActive = true} id="change-address-btn">Change</button>
                     </div>
+                    <form method="POST" action="?/address" class:active={addressFormActive}>
+                        {#if form?.error}
+                            <div class="error">
+                                <div class="error__icon-container">
+                                    <svg fill="#ff424f" viewBox="0 0 200 200" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" stroke="#ff424f"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><title></title><path d="M100,15a85,85,0,1,0,85,85A84.93,84.93,0,0,0,100,15Zm0,150a65,65,0,1,1,65-65A64.87,64.87,0,0,1,100,165Z"></path><path d="M128.5,74a9.67,9.67,0,0,0-14,0L100,88.5l-14-14a9.9,9.9,0,0,0-14,14l14,14-14,14a9.9,9.9,0,0,0,14,14l14-14,14,14a9.9,9.9,0,0,0,14-14l-14-14,14-14A10.77,10.77,0,0,0,128.5,74Z"></path></g></svg>
+                                </div>
+                                <div class="error__message">{form?.message}</div>
+                            </div>
+                        {/if}
+                        <div class="input-widget">
+                            <input class="input-widget__input" type="text" id="name" name="name" placeholder=" " value={user.username} required />
+                            <label class="input-widget__label" for="name">Name *</label>
+                        </div>
+                        <div class="input-widget">
+                            <input class="input-widget__input" type="text" id="phone" name="phone" placeholder=" " value={user.phone_number} required />
+                            <label class="input-widget__label" for="phone">Phone number *</label>
+                        </div>
+                        <div class="input-widget">
+                            <input class="input-widget__input" type="text" id="address" name="address" placeholder=" " value={user.address} required />
+                            <label class="input-widget__label" for="address">Address *</label>
+                        </div>
+                        <div class="btn-group">
+                            <button class="btn btn--secondary" on:click={() => addressFormActive = false}>Cancel</button>
+                            <button class="btn btn--primary" on:click={handleSubmit} type="submit">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="card">
@@ -125,7 +164,7 @@
                         <p class="price__text--big">Total</p>
                         <p class="price__value--big">S$ {totalPrice}</p>
                     </div>
-                    <button on:click={placeOrder} disabled={carts.length === 0} id="place-order-btn">Place Order</button>
+                    <button on:click={placeOrder} disabled={carts.length === 0 || !user.address} id="place-order-btn">Place Order</button>
                 </div>
             </div>
         </aside>
@@ -293,5 +332,93 @@
     .price__value--big {
         font-size: 1.9rem;
         font-weight: 500;
+    }
+
+    form {
+        display: none;
+    }
+    form.active {
+        display: block;
+        margin-top: 3rem;
+    }
+    .input-widget {
+        margin-inline: auto;
+        position: relative;
+        width: 100%;
+        margin-bottom: 2.6rem;
+    }
+    .input-widget__input {
+        width: 100%;
+        background: none;
+        outline: none;
+        padding: 1.5rem;
+        border: 1px solid var(--primary-line-color);
+        border-radius: 3px;
+        transition: all 160ms ease-in;
+    }
+    .input-widget__input:hover {
+        border-color: var(--secondary-color);
+    }
+    .input-widget__input:focus {
+        border-color: var(--secondary-color--decent);
+    }
+    .input-widget__label {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 1rem;
+        padding: 0 0.5rem;
+        color: var(--fc-secodary);
+        background-color: #fff;
+        cursor: text;
+        transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;
+    }
+    .input-widget__input:focus ~ .input-widget__label,
+    .input-widget__input:not(:placeholder-shown).input-widget__input:not(:focus) ~ .input-widget__label {
+        top: 0;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333;
+    }
+    .btn-group {
+        display: flex;
+        justify-content: flex-end;
+        gap: 2rem;
+    }
+    .btn {
+        padding: 1rem;
+        min-width: 140px;
+        border: 2px solid var(--primary-color);
+        border-radius: 3px;
+    }
+    .btn--primary {
+        background-color: var(--primary-color);
+        color: #fff;
+    }
+    .btn--secondary {
+        background-color: #f0e5f1;
+        color: var(--fc-primary-color);
+    }
+
+    .error {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.2rem 1.5rem;
+        margin-bottom: 2.6rem;
+        background-color: #fff9fa;
+        border: 1px solid rgba(255, 66, 79, .2);
+        border-radius: 3px;
+    }
+    .error__icon-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 1.5rem;
+    }
+    .error__icon-container > svg {
+        width: 24px;
+        height: 24px;
     }
 </style>

@@ -1,3 +1,5 @@
+import sqlalchemy as sa
+import sqlalchemy.orm as so
 from models import User
 from extensions import db, jwt
 from apiflask import APIBlueprint
@@ -66,6 +68,33 @@ def signup():
     db.session.commit()
 
     return render_response()
+
+
+@auth_bp.post('/update/<int:user_id>')
+@jwt_required()
+def update(user_id):
+    update_fields = request.json.get('update_fields')
+    user = db.session.get(User, user_id)
+
+    if not user:
+        return error_response(404, 'User not found')
+
+    for key in update_fields.keys():
+        if key not in User.__table__.columns.keys():
+            return error_response(400, f"Invalid field: {key}")
+
+    db.session.execute(sa.update(User).where(User.id == user_id).values(**update_fields))
+    db.session.commit()
+
+    user = db.session.get(User, user_id)
+    return render_response(data=user.to_dict())
+
+
+@auth_bp.get('get_user_info')
+@jwt_required()
+def get_user_info():
+    user = current_user
+    return render_response(data=user.to_dict())
 
 
 @auth_bp.post('/delete_account')
