@@ -1,4 +1,5 @@
 import { error, fail } from '@sveltejs/kit'
+import { redirect, setFlash } from 'sveltekit-flash-message/server'
 
 
 /** @type {import('./$types').PageServerLoad} */
@@ -52,8 +53,7 @@ export const actions = {
         if (!res.ok) 
             fail(json.code || 400, { message: json.message, error: true })
 
-        return {
-            user: json.data
-        }
+        throw redirect(303, '/checkout', { type: 'success', message: 'Info updated successfully' }, cookies)
+        // setFlash({ type: 'success', message: 'Info updated successfully' }, cookies)
     }
 }

@@ -76,6 +76,9 @@ def list_orders():
     orders = Order.query.filter(Order.user_id == user_id).all()
     orders_info = [order.to_dict() for order in orders]
 
+    if len(orders_info) == 0:
+        return error_response(404, "You haven't made any orders yet")
+
     for order in orders_info:
         for item in order['items']:
             item.update({

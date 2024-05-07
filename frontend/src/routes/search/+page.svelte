@@ -94,7 +94,8 @@
 
             <div class="product-list-container">
 
-                <div class="filters-list" class:filters-list--hide={filters.length === 0}>
+                <div class="filters-list">
+                    <h3>{$page.url.searchParams.get('q')}</h3>
                     {#each filters as filter}
                         <button class="active-filter" on:click={() => deleteFilter(filter.key)}>
                             <span class="active-filter__text">{filter.value}</span>
@@ -181,9 +182,12 @@
         display: flex;
         gap: 1rem;
         margin-bottom: 2rem;
+        align-items: center;
     }
-    .filters-list--hide {
-        display: none;
+    .filters-list > h3 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-right: 2rem;
     }
     .active-filter {
         height: 45px;

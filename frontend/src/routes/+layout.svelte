@@ -211,9 +211,16 @@
         border: 1px solid var(--primary-line-color);
     }
     .dropdown__item {
+        width: 200px;
         white-space: nowrap;
-        padding: 1rem 8rem 1rem 3rem;
         transition: all .15s ease-in-out;
+    }
+    .dropdown__item > a,
+    .dropdown__item > form > button {
+        width: 100%;
+        display: block;
+        padding: 1rem 0 1rem 3rem;
+        text-align: left
     }
     .dropdown__item:hover {
         background-color: #f5f5f5;
