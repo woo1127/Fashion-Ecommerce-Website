@@ -14,7 +14,7 @@ from routes import auth_bp, product_bp, cart_bp, order_bp
 def create_app(config_object=Config):
     app = APIFlask(__name__)
     app.json.sort_keys = False
-    app.config.from_object(DevelopmentConfig)
+    app.config.from_object(ProuctionConfig)
     register_extensions(app)
     register_blueprints(app)
     register_error_handlers(app)
