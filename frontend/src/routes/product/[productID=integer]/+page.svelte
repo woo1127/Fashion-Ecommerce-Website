@@ -1,4 +1,6 @@
 <script>
+    import { goto, invalidateAll } from '$app/navigation';
+    import { page } from '$app/stores';
     import ButtonGroup from '$lib/components/ButtonGroup.svelte';	
         
     /** @type {import('./$types').PageData} */
@@ -10,11 +12,9 @@
     ].slice(1)
     let activeImage = imageURLs[0]
     let options = {images: [], sizes: [], colors: [], quantity: 1}
-
-    console.log(access_token)
     
 
-    async function addToCart() {
+    async function addToCart(isPurchase = false) {
         if (options.sizes.length === 0 || options.colors.length === 0) {
             alert('Please select all product variations')
             return
@@ -39,8 +39,14 @@
             })
         })
 
+        if (isPurchase)
+            invalidateAll('/checkout')
+
         if (res.ok)
             alert('Item successfully added to cart')
+
+        // reload the page to update the cart item count
+        invalidateAll($page.url)
     }
 </script>
 
@@ -158,10 +164,10 @@
             </div>
 
             <div class="order-button-container">
-                <button class="order-button--primary" on:click={addToCart}>
+                <button class="order-button--primary" on:click={() => addToCart(false)}>
                     Add to Cart
                 </button>
-                <button class="order-button--secondary">Purchase Now</button>
+                <button class="order-button--secondary" on:click={() => addToCart(true)}>Purchase Now</button>
             </div>
         </section>
     </div>

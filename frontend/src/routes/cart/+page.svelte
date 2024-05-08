@@ -1,5 +1,5 @@
 <script>
-    import { goto } from '$app/navigation'
+    import { goto, invalidateAll } from '$app/navigation'
 
     /** @type {import('./$types').PageData} */
     export let data
@@ -51,6 +51,9 @@
         if (!res.ok) throw new Error(json.message)
 
         carts = carts.filter(cart => cart.id !== cartId)
+
+        // reload the page to update the cart item count
+        invalidateAll('/cart')
     }
 </script>
 

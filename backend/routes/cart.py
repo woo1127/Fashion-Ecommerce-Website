@@ -76,6 +76,13 @@ def get_cart_info():
     return render_response(data=items)
 
 
+@cart_bp.get("/get_cart_count")
+@jwt_required()
+def get_cart_count():
+    count = len(current_user.carts)
+    return render_response(data=count)
+
+
 @cart_bp.post("/delete")
 @jwt_required()
 def delete_cart_item():
