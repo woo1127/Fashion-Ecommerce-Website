@@ -1,6 +1,6 @@
 <script>
     import ButtonGroup from '$lib/components/ButtonGroup.svelte';
-    import { goto } from '$app/navigation';
+    import { goto, invalidateAll } from '$app/navigation';
 
     /** @type {import('./$types').PageData} */
     export let data

@@ -1,3 +1,59 @@
+### How to get this project to run on first time
+---
+
+#### <b>Backend Part</b>:
+1. Create a virtul environment for python by run command `python -m venv {{name of venv here}}`
+2. Install all the required packages by running command `pip install -r requirements.txt`
+3. Change directory to the `backend` folder by running command `cd backend`
+4. Run the command `python app.py` to start the backend server
+
+<br>
+
+#### <b>Frontend Part</b>:
+1. Change directory to the `frontend` folder by running command `cd frontend`
+2. Install all the required packages by running command `npm install`
+3. Run the command `npm run dev` to start the frontend server in development mode or `npm run preview` for production mode.
+
+<br>
+
+### Tech Stacks of this project
+---
+- Flask: Backend framework to develop API
+- APIFlask: A simple wrapper of Flask with additional features like Marshmellow, OpenAPI, etc.
+- Sqlalchemy: ORM to interact with database
+- SQLite: A single file database
+- Whoosh: Full text search engine
+- Flask-Migrate: To manage migration of database
+- flask-jwt-extended: To manage JWT token for authentication
+- Sveltekit: Frontend framework to develop website
+- svelte-carousel: A carousel library for svelte / sveletekit
+- sveltekit-flash-message: A flash message library for svelte / sveltekit
+
+<br>
+
+### Flask shell
+---
+- Flask come with it's own shell to interact with the application. To start the shell, run the command `flask shell` in the terminal.
+- You can register your own shell command inside the `make_shell_context` function in the `app.py` file.
+
+<br>
+
+### Flask Migrate
+---
+- Whenever you making change about the `models.py`, you are necessary to run the command `flask db migrate -m {{migrate message}}` to generate the migration file and then run the command `flask db upgrade` to apply the migration to the database.
+- Think of flask migrate as a version control for database.
+- A tricky approach to delete all data but keep the model defined is by running the combination of commands `flask db downgrade base` followed by `flask db upgrade`.
+
+<br>
+
+### Color Schemes
+---
+- #d09fdc light purple
+- #FFB6C1 light pink
+- #AEE0FF baby blue
+
+<br>
+
 ### References
 ---
 

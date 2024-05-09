@@ -40,7 +40,7 @@
             </div>
         </div>
         <button class="btn">
-            <a href="/">Back to Home</a>
+            <a rel="external" href="/">Back to Home</a>
         </button>
     </div>
 </div>
