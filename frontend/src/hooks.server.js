@@ -9,7 +9,10 @@ const public_paths = [
 
 function isPathAllowed(path) {
 	return public_paths.some(allowedPath =>
-		path === allowedPath || path.startsWith(allowedPath + '/') || path === '/__data.json'
+		path === allowedPath || 
+		path.startsWith(allowedPath + '/') || 
+		path === '/__data.json' || 
+		path === '/'
 	);
 }
 

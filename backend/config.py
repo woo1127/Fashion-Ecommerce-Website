@@ -13,7 +13,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///' + os.path.join(basedir, 'app.db'))
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     WHOOSH_INDEX_PATH = os.environ.get('WHOOSH_INDEX_PATH', os.path.join(basedir, 'indexdir'))
-    PRODUCTS_PER_PAGE = 28
+    PRODUCTS_PER_PAGE = 24
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY', '9f3lJrckaV2EPiC403XhXSgkbRA2V1LPRkGLad6ZqpdFa2DRPbLIQG7Sej6eAyD')
     JWT_TOKEN_LOCATION = ['cookies', 'headers']
     JWT_SESSION_COOKIE = False

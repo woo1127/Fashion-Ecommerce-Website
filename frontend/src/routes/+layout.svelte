@@ -5,9 +5,6 @@
     import { page } from '$app/stores'
     import { getFlash } from 'sveltekit-flash-message'
 
-    // /** @type {import('./$types').PageData} */
-    // export let data
-    // let { user, cart_item_count } = data
     let active = false
     const flash = getFlash(page, {clearAfterMs: 3500})
 

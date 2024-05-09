@@ -2,16 +2,17 @@
 ---
 
 #### <b>Backend Part</b>:
-1. Create a virtul environment for python by run command `python -m venv {{name of venv here}}`
-2. Install all the required packages by running command `pip install -r requirements.txt`
-3. Change directory to the `backend` folder by running command `cd backend`
-4. Run the command `python app.py` to start the backend server
+1. Change directory to the `backend` folder by running command `cd backend`.
+2. Create a virtul environment for python by run command `python -m venv {{name of venv here}}`.
+3. Install all the required packages by running command `pip install -r requirements.txt`.
+4. Run the command `pip install -e .` to install the backend folder as a package.
+5. Run the command `python app.py` to start the backend server.
 
 <br>
 
 #### <b>Frontend Part</b>:
-1. Change directory to the `frontend` folder by running command `cd frontend`
-2. Install all the required packages by running command `npm install`
+1. Change directory to the `frontend` folder by running command `cd frontend`.
+2. Install all the required packages by running command `npm install`.
 3. Run the command `npm run dev` to start the frontend server in development mode or `npm run preview` for production mode.
 
 <br>
